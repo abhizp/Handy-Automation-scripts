@@ -1,0 +1,32 @@
+---
+
+- name: Check and note the cortex version
+  gather_facts: no
+  hosts: all
+  become: yes
+  become_method: sudo
+  vars_files:
+    - abhi_creds.yml
+  
+  tasks: 
+    - name: Run the script and get the results
+      script: /u/ablnu/cortex_check.sh
+      register: cortex_check_output
+    
+    - name: Creates and consolidates the excel sheet
+      set_fact:
+        csv_row: "{{ inventory_hostname }},{{ cortex_check_output.stdout }}"
+
+- name: Save consolidated CSV report on control node
+  hosts: localhost
+  gather_facts: no
+  tasks:
+    - name: Aggregate all rows from hosts
+      set_fact:
+        all_rows: "{{ hostvars | dict2items | selectattr('value.csv_row','defined') | map(attribute='value.csv_row') | list }}"
+
+    - name: Write all results to CSV file
+      copy:
+        content: "server_name,agent_present,agent_version,agent_active\n{{ all_rows | join('\n') }}"
+        dest: /u/ablnu/reports_cortex
+
