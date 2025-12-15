@@ -1,0 +1,14 @@
+---
+
+- name: check the current ldap server
+  hosts: all
+  become: yes
+  tasks:
+
+    - name: check the ldap server and print cortex_check_output
+      shell: ls-secldapclntd | grep -e "^current ldapserver" -e "^ldapservers"
+      register: ldap_ans
+
+    - name: See the actuall output
+      debug:
+        var: ldap_ans.stdout_lines

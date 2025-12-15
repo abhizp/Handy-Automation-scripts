@@ -1,5 +1,6 @@
 #!/bin/bash 
 #ansible server: clheanspr001
+#ssh key location : /c/Users/2374906/.ssh/id_rs
 
 #checks whether the cortex is installed or not on the server if installed fetches the agent version:
 
