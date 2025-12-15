@@ -5,3 +5,5 @@ for host in $(cat cred_check); do
         echo "$host" >> down222.txt
     fi
 done
+
+## simple comment to check git edits
