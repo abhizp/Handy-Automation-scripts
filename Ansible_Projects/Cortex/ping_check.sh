@@ -6,4 +6,8 @@ for host in $(cat ); do
     fi
 done
 
+<<<<<<< HEAD
 
+=======
+## simple comment to check git edits
+>>>>>>> c62e7e7fbd1056cdc0fb74cc794e39d803851897
